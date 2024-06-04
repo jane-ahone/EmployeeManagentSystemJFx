@@ -1,4 +1,5 @@
 package controllers;
+import models.Employee; //importing employee class
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import utils.ConnectionUtil;
 
 public class LoginController implements Initializable {
+    public static Employee currLoggedInEmployee;    //stores the value of the currently logged in employee
 
     @FXML
     private Label lblErrors;
@@ -34,10 +36,17 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnSignin;
 
-    /// --
+    //Creating database connection
     Connection con = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
+
+    public LoginController() {
+        con = ConnectionUtil.conDB();
+    }
+
+    //Function logic
+
 
     @FXML
     public void handleButtonAction(MouseEvent event) {
@@ -76,24 +85,22 @@ public class LoginController implements Initializable {
         }
     }
 
-    public LoginController() {
-        con = ConnectionUtil.conDB();
-    }
 
-    //we gonna use string to check for status
+
+    //we're going to use string to check for status
     private String logIn() {
         String status = "Success";
-        String email = txtUsername.getText();
+        String empUsername = txtUsername.getText();
         String password = txtPassword.getText();
-        if(email.isEmpty() || password.isEmpty()) {
+        if(empUsername.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
             status = "Error";
         } else {
             //query
-            String sql = "SELECT * FROM admins Where email = ? and password = ?";
+            String sql = "SELECT * FROM empaccount Where user_name = ? and user_password = ? ";
             try {
                 preparedStatement = con.prepareStatement(sql);
-                preparedStatement.setString(1, email);
+                preparedStatement.setString(1, empUsername);
                 preparedStatement.setString(2, password);
                 resultSet = preparedStatement.executeQuery();
                 if (!resultSet.next()) {
@@ -101,6 +108,8 @@ public class LoginController implements Initializable {
                     status = "Error";
                 } else {
                     setLblError(Color.GREEN, "Login Successful..Redirecting..");
+                    System.out.println(resultSet);
+                    currLoggedInEmployee = new Employee(1,"j","e");      // edit this and add the variables necessary
                 }
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());

@@ -7,11 +7,11 @@ package models;
 
 /**
  *
- * @author oXCToo
+ *
  */
-public class User {
+public class Employee {
 
-    private String id;
+    private int id;
 
     private String email;
 
@@ -19,16 +19,20 @@ public class User {
 
     private String gender;
 
-    private String lastname;
+    private String username;
 
-    private String firstname;
+    public Employee(int id, String email, String username) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+    }
 
-    public String getId ()
+    public int getId ()
     {
         return id;
     }
 
-    public void setId (String id)
+    public void setId (int id)
     {
         this.id = id;
     }
@@ -63,29 +67,24 @@ public class User {
         this.gender = gender;
     }
 
-    public String getLastname ()
-    {
-        return lastname;
-    }
 
-    public void setLastname (String lastname)
-    {
-        this.lastname = lastname;
-    }
+
+
 
     public String getFirstname ()
     {
-        return firstname;
+        return username;
     }
 
     public void setFirstname (String firstname)
     {
-        this.firstname = firstname;
+        this.username
+                = firstname;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [id = "+id+", email = "+email+", dob = "+dob+", gender = "+gender+", lastname = "+lastname+", firstname = "+firstname+"]";
+        return "ClassPojo [id = "+id+", email = "+email+", dob = "+dob+", gender = "+gender+", username = "+username+"]";
     }
 }

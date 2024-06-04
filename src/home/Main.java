@@ -1,3 +1,7 @@
+
+/*Entry point to application.
+* On runtime, displays login screen
+* */
 package home;
 
 import javafx.application.Application;
@@ -18,7 +22,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-//we gonna remove the borderless thingie.  
         stage.initStyle(StageStyle.DECORATED);
         stage.setMaximized(false);
 
@@ -30,9 +33,6 @@ public class Main extends Application {
                 yOffset = event.getSceneY();
             }
         });
-
-        //sorry about that - Windows defender issue.
-        //move around here
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
